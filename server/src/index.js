@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const { mongoUser, mongoPassword } = require("./.config/mongoInfo");
+const { mongoUser, mongoPassword } = require("../.config/mongoInfo");
 const monogoURI = `mongodb+srv://${mongoUser}:${mongoPassword}@cluster0-xdvc0.mongodb.net/test?retryWrites=true&w=majority`;
 mongoose.connect(monogoURI, {
 	useUnifiedTopology: true,
@@ -9,7 +9,7 @@ mongoose.connect(monogoURI, {
 });
 const db = mongoose.connection;
 db.on("connected", () => {
-	console.log("Connect to MongoDB");
+	console.log("Connected to MongoDB");
 });
 db.on("error", (error) => {
 	console.log("There was an error connecting to MongoDB", error);
@@ -22,5 +22,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen("3000", () => {
-	console.log("listening");
+	console.log("Listening...");
 });
