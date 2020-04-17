@@ -1,3 +1,6 @@
+//Models: should always be declared at the top
+require("./models/User");
+
 const express = require("express");
 const mongoose = require("mongoose");
 const authRouter = require("./routes/authRoute");
