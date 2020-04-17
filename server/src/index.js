@@ -1,7 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const authRouter = require("./routes/authRoute");
 
-/**
+const app = express();
+app.use(express.json()); // will parse the information coming in the request paramenter
+app.use(authRouter);
+
+/** Connect to MongoDB through Mongoose
  * Go to cloud.mongodb.com to sign up form the database host
  */
 const { mongoUser, mongoPassword } = require("../.config/mongoInfo");
@@ -18,12 +23,12 @@ db.on("error", (error) => {
 	console.log("There was an error connecting to MongoDB", error);
 });
 
-const app = express();
-
+// Test connection
 app.get("/", (req, res) => {
 	res.send("hi there");
 });
 
+// Listen to PORT
 app.listen("3000", () => {
 	console.log("Listening...");
 });
