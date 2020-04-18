@@ -18,4 +18,22 @@ router.post("/signup", async (req, res) => {
 	}
 });
 
+router.post("/signin", async (req, res) => {
+	let { email, password } = req.body;
+
+	if (!email || !password) res.status(422).send({ error: "Must provide email and password" });
+
+	let user = await User.findOne({ email });
+	if (!user) res.status(422).send({ error: "Email not found" });
+
+	try {
+		await user.comparePassword(password);
+		// Sign the user in
+		let token = jwt.sign({ userId: user._id }, "PRIVATE_KEY");
+		res.send({ token });
+	} catch (err) {
+		res.status(422).send({ error: "Invalid password or email" });
+	}
+});
+
 module.exports = router;
