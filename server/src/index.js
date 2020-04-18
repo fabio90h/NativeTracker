@@ -1,16 +1,21 @@
-//Models: should always be declared at the top
+// Models: should always be declared at the top
 require("./models/User");
+require("./models/Track");
 
 const express = require("express");
 const mongoose = require("mongoose");
 const authRouter = require("./routes/authRoute");
+const trackRouter = require("./routes/trackRoute");
 
-//Middlewares
+// Middlewares
 const reqAuth = require("./middlewares/reqAuth");
 
 const app = express();
 app.use(express.json()); // will parse the information coming in the request paramenter
+
+// Routes
 app.use(authRouter);
+app.use(trackRouter);
 
 /** Connect to MongoDB through Mongoose
  * Go to cloud.mongodb.com to sign up form the database host
