@@ -5,6 +5,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const authRouter = require("./routes/authRoute");
 
+//Middlewares
+const reqAuth = require("./middlewares/reqAuth");
+
 const app = express();
 app.use(express.json()); // will parse the information coming in the request paramenter
 app.use(authRouter);
@@ -27,8 +30,8 @@ db.on("error", (error) => {
 });
 
 // Test connection
-app.get("/", (req, res) => {
-	res.send("hi there");
+app.get("/", reqAuth, (req, res) => {
+	res.send(`Email is ${req.user.email}`);
 });
 
 // Listen to PORT
