@@ -1,19 +1,58 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+import SignupScreen from "./src/screens/SignupScreen";
+import SigninScreen from "./src/screens/SigninScreen";
+import AccountScreen from "./src/screens/AccountScreen";
+import TrackCreateScreen from "./src/screens/TrackCreateScreen";
+import TrackDetailScreen from "./src/screens/TrackDetailScreen";
+import TrackListScreen from "./src/screens/TrackListScreen";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+	const Stack = createStackNavigator();
+
+	return (
+		<NavigationContainer>
+			<Stack.Navigator initialRouteName="loginFlow">
+				<Stack.Screen name="loginFlow" component={LoginFlow} />
+				<Stack.Screen name="mainFlow" component={MainFlow} />
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// Navigation between login and sign up
+function LoginFlow() {
+	const Stack = createStackNavigator();
+	return (
+		<Stack.Navigator initialRouteName="Signup">
+			<Stack.Screen name="Signup" component={SignupScreen} />
+			<Stack.Screen name="Signin" component={SigninScreen} />
+		</Stack.Navigator>
+	);
+}
+
+// Track Navigation
+function TrackListFlow() {
+	const Stack = createStackNavigator();
+	return (
+		<Stack.Navigator>
+			<Stack.Screen name="TrackList" component={TrackListScreen} />
+			<Stack.Screen name="TrackDetail" component={TrackDetailScreen} />
+		</Stack.Navigator>
+	);
+}
+
+// Main App Navigation
+function MainFlow() {
+	const Tab = createBottomTabNavigator();
+	return (
+		<Tab.Navigator>
+			<Tab.Screen name="Account" component={AccountScreen} />
+			<Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
+			<Tab.Screen name="trackListFlow" component={TrackListFlow} />
+		</Tab.Navigator>
+	);
+}
