@@ -28,7 +28,7 @@ function LoginFlow() {
 	const Stack = createStackNavigator();
 	return (
 		<Stack.Navigator initialRouteName="Signup">
-			<Stack.Screen name="Signup" component={SignupScreen} />
+			<Stack.Screen options={{ headerShown: false }} name="Signup" component={SignupScreen} />
 			<Stack.Screen name="Signin" component={SigninScreen} />
 		</Stack.Navigator>
 	);
