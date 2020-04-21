@@ -25,6 +25,7 @@ const monogoURI = `mongodb+srv://${mongoUser}:${mongoPassword}@cluster0-xdvc0.mo
 mongoose.connect(monogoURI, {
 	useUnifiedTopology: true,
 	useNewUrlParser: true,
+	useCreateIndex: true,
 });
 const db = mongoose.connection;
 db.on("connected", () => {
