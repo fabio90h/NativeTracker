@@ -1,6 +1,7 @@
 import createDataContext from "./createDataContext";
 import trackerAPI from "../api/tracker";
 import { AsyncStorage } from "react-native";
+import { navigate } from "../RootNavigation";
 
 // Declare Reducer
 const authReducer = (state, action) => {
@@ -23,7 +24,9 @@ const signUp = (dispatch) => async ({ email, password }) => {
 		});
 		await AsyncStorage.setItem("token", response.data.token);
 		dispatch({ type: "signup", payload: response.data.token });
+		navigate("mainFlow");
 	} catch (error) {
+		console.error(error.message);
 		dispatch({
 			type: "add_error",
 			payload: "An error has occured when signing in. Please try again later.",
