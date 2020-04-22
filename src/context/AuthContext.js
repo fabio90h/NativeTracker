@@ -4,8 +4,10 @@ import trackerAPI from "../api/tracker";
 // Declare Reducer
 const authReducer = (state, action) => {
 	switch (action.type) {
+		case "add_error":
+			return { ...state, errorMessage: action.payload };
 		default:
-			return [...state];
+			return state;
 	}
 };
 
@@ -18,7 +20,10 @@ const signUp = (dispatch) => async ({ email, password }) => {
 		});
 		console.log(response);
 	} catch (error) {
-		console.error(error);
+		dispatch({
+			type: "add_error",
+			payload: "An error has occured when signing in. Please try again later.",
+		});
 	}
 };
 
@@ -26,5 +31,5 @@ const signUp = (dispatch) => async ({ email, password }) => {
 export const { Provider, Context } = createDataContext(
 	authReducer,
 	{ signUp },
-	{ isSignedIn: false }
+	{ isSignedIn: false, errorMessage: "" }
 );
