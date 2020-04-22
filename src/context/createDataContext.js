@@ -11,7 +11,7 @@ export default (reducer, actions, initialValues) => {
 
 		//Create Actions
 		const boundActions = {};
-		for (let key of actions) {
+		for (let key in actions) {
 			boundActions[key] = actions[key](dispatch);
 		}
 
