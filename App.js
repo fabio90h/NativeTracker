@@ -10,20 +10,20 @@ import TrackCreateScreen from "./src/screens/TrackCreateScreen";
 import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 
-import { Provider as AuthProvider } from "./src/context/AuthProvider";
+import { Provider as AuthContext } from "./src/context/AuthContext";
 
 export default function App() {
 	const Stack = createStackNavigator();
 
 	return (
-		<AuthProvider>
+		<AuthContext>
 			<NavigationContainer>
 				<Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="loginFlow">
 					<Stack.Screen name="loginFlow" component={LoginFlow} />
 					<Stack.Screen name="mainFlow" component={MainFlow} />
 				</Stack.Navigator>
 			</NavigationContainer>
-		</AuthProvider>
+		</AuthContext>
 	);
 }
 
