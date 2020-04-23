@@ -6,6 +6,8 @@ import { navigate } from "../RootNavigation";
 // Declare Reducer
 const authReducer = (state, action) => {
 	switch (action.type) {
+		case "clear_error":
+			return { ...state, errorMessage: "" };
 		case "signin":
 			return { errorMessage: "", token: action.payload };
 		case "add_error":
@@ -16,6 +18,9 @@ const authReducer = (state, action) => {
 };
 
 // Declare Actions
+const clearErrorMessage = (dispatch) => () => {
+	dispatch({ type: "clear_error" });
+};
 const signUp = (dispatch) => async ({ email, password }) => {
 	try {
 		let response = await trackerAPI.post("/signup", {
@@ -50,6 +55,6 @@ const signIn = (dispatch) => async ({ email, password }) => {
 // Export
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ signUp, signIn },
+	{ signUp, signIn, clearErrorMessage },
 	{ isSignedIn: false, errorMessage: "" }
 );

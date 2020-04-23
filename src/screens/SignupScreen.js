@@ -1,11 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 import AuthForm from "../components/AuthForm";
 import NavLink from "../components/NavLink";
 
 const SignupScreen = ({ navigation }) => {
-	const { state, signUp } = useContext(AuthContext);
+	const { state, signUp, clearErrorMessage } = useContext(AuthContext);
+
+	useEffect(() => {
+		let focus = navigation.addListener("focus", () => {
+			clearErrorMessage();
+		});
+		return focus;
+	}, []);
 
 	return (
 		<View style={styles.container}>

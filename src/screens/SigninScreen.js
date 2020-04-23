@@ -1,11 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import AuthForm from "../components/AuthForm";
 import { Context as AuthContext } from "../context/AuthContext";
 import NavLink from "../components/NavLink";
 
 const SigninScreen = ({ navigation }) => {
-	const { state, signIn } = useContext(AuthContext);
+	const { state, signIn, clearErrorMessage } = useContext(AuthContext);
+
+	useEffect(() => {
+		let focus = navigation.addListener("focus", () => {
+			clearErrorMessage();
+		});
+
+		return focus;
+	}, []);
+
 	return (
 		<View style={styles.container}>
 			<AuthForm
