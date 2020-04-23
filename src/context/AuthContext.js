@@ -26,7 +26,6 @@ const signUp = (dispatch) => async ({ email, password }) => {
 		dispatch({ type: "signup", payload: response.data.token });
 		navigate("mainFlow");
 	} catch (error) {
-		console.error(error.message);
 		dispatch({
 			type: "add_error",
 			payload: "An error has occured when signing in. Please try again later.",
