@@ -6,7 +6,7 @@ import { navigate } from "../RootNavigation";
 // Declare Reducer
 const authReducer = (state, action) => {
 	switch (action.type) {
-		case "signup":
+		case "signin":
 			return { errorMessage: "", token: action.payload };
 		case "add_error":
 			return { ...state, errorMessage: action.payload };
@@ -23,7 +23,21 @@ const signUp = (dispatch) => async ({ email, password }) => {
 			password,
 		});
 		await AsyncStorage.setItem("token", response.data.token);
-		dispatch({ type: "signup", payload: response.data.token });
+		dispatch({ type: "signin", payload: response.data.token });
+		navigate("mainFlow");
+	} catch (error) {
+		dispatch({
+			type: "add_error",
+			payload: "An error has occured when signing up. Please try again later.",
+		});
+	}
+};
+
+const signIn = (dispatch) => async ({ email, password }) => {
+	try {
+		let response = await trackerAPI.post("/signin", { email, password });
+		await AsyncStorage.setItem("token", response.data.token);
+		dispatch({ type: "signin", payload: response.data.token });
 		navigate("mainFlow");
 	} catch (error) {
 		dispatch({
@@ -36,6 +50,6 @@ const signUp = (dispatch) => async ({ email, password }) => {
 // Export
 export const { Provider, Context } = createDataContext(
 	authReducer,
-	{ signUp },
+	{ signUp, signIn },
 	{ isSignedIn: false, errorMessage: "" }
 );
