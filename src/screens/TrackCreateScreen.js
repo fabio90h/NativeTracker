@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Map from "../components/Map";
 import { SafeAreaView } from "react-native-safe-area-context";
+import "../_mockLocation";
 
 const TrackCreateScreen = () => {
 	return (
