@@ -1,14 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Text, StyleSheet } from "react-native";
+import { Context as LocationContext } from "../context/LocationContext";
 
 import MapView from "react-native-maps";
 
 const Map = () => {
+	const {
+		state: { currentLocation },
+	} = useContext(LocationContext);
+
+	if (!currentLocation) {
+		return null;
+	}
+
 	return (
 		<>
 			<MapView
 				style={styles.map}
-				initialRegion={{ latitude: 38, longitude: -122, latitudeDelta: 0.01, longitudeDelta: 0.01 }}
+				initialRegion={{ ...currentLocation.coords, latitudeDelta: 0.01, longitudeDelta: 0.01 }}
+				region={{ ...currentLocation.coords, latitudeDelta: 0.01, longitudeDelta: 0.01 }}
 			/>
 		</>
 	);
