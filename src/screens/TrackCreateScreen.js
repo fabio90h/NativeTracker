@@ -22,7 +22,9 @@ const TrackCreateScreen = () => {
 					timeInterval: 1000,
 					distanceInterval: 10,
 				},
-				(location) => addLocation(location)
+				(location) => {
+					addLocation(location);
+				}
 			);
 		} catch (error) {
 			setMapError(error);
@@ -31,7 +33,8 @@ const TrackCreateScreen = () => {
 
 	useEffect(() => {
 		startWatching();
-	});
+	}, []);
+
 	return (
 		<SafeAreaView>
 			<Text>TrackCreateScreen</Text>
