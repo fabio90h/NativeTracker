@@ -2,8 +2,9 @@ import { Accuracy, requestPermissionsAsync, watchPositionAsync } from "expo-loca
 import { useEffect, useState } from "react";
 //import "../_mockLocation";
 
-export default (callback) => {
+export default (shouldTrack, callback) => {
 	const [mapError, setMapError] = useState(null);
+	const [subscribe, setSubscribe] = useState(null);
 
 	const startWatching = async () => {
 		try {
@@ -11,7 +12,7 @@ export default (callback) => {
 			if (permission.status === "denied") {
 				setMapError("You must enable locations to use this feature");
 			}
-			await watchPositionAsync(
+			let sub = await watchPositionAsync(
 				{
 					accuracy: Accuracy.BestForNavigation,
 					timeInterval: 1000,
@@ -19,14 +20,19 @@ export default (callback) => {
 				},
 				callback
 			);
+			setSubscribe(sub);
 		} catch (error) {
 			setMapError(error);
 		}
 	};
 
 	useEffect(() => {
-		startWatching();
-	}, []);
+		if (shouldTrack) startWatching();
+		else {
+			subscribe.remove();
+			setSubscribe(null);
+		}
+	}, [shouldTrack]);
 
 	return [mapError];
 };
