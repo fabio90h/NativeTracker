@@ -1,38 +1,42 @@
 import { Accuracy, requestPermissionsAsync, watchPositionAsync } from "expo-location";
 import { useEffect, useState } from "react";
-//import "../_mockLocation";
+import "../_mockLocation";
 
 export default (shouldTrack, callback) => {
 	const [mapError, setMapError] = useState(null);
-	const [subscribe, setSubscribe] = useState(null);
-
-	const startWatching = async () => {
-		try {
-			let permission = await requestPermissionsAsync();
-			if (permission.status === "denied") {
-				setMapError("You must enable locations to use this feature");
-			}
-			let sub = await watchPositionAsync(
-				{
-					accuracy: Accuracy.BestForNavigation,
-					timeInterval: 1000,
-					distanceInterval: 10,
-				},
-				callback
-			);
-			setSubscribe(sub);
-		} catch (error) {
-			setMapError(error);
-		}
-	};
 
 	useEffect(() => {
+		let subscriber;
+		const startWatching = async () => {
+			try {
+				let permission = await requestPermissionsAsync();
+				if (permission.status === "denied") {
+					setMapError("You must enable locations to use this feature");
+				}
+				subscriber = await watchPositionAsync(
+					{
+						accuracy: Accuracy.BestForNavigation,
+						timeInterval: 1000,
+						distanceInterval: 10,
+					},
+					callback
+				);
+			} catch (error) {
+				setMapError(error);
+			}
+		};
+
 		if (shouldTrack) startWatching();
 		else {
-			subscribe.remove();
-			setSubscribe(null);
+			if (subscriber) subscriber.remove();
+			subscriber = null;
 		}
-	}, [shouldTrack]);
+
+		//Clean Up function so this is not stacking up and creating a memory leak
+		return () => {
+			if (subscriber) subscriber.remove();
+		};
+	}, [shouldTrack, callback]);
 
 	return [mapError];
 };
