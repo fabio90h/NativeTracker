@@ -17,24 +17,30 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 // PROVIDERS
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { Provider as LocationProvider } from "./src/context/LocationContext";
+import { Provider as TrackProvider } from "./src/context/TrackContext";
 
 export default function App() {
 	const Stack = createStackNavigator();
 
 	return (
-		<LocationProvider>
-			<AuthProvider>
-				<SafeAreaProvider>
-					<NavigationContainer ref={navigationRef}>
-						<Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="ResolveAuth">
-							<Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
-							<Stack.Screen name="loginFlow" component={LoginFlow} />
-							<Stack.Screen name="mainFlow" component={MainFlow} />
-						</Stack.Navigator>
-					</NavigationContainer>
-				</SafeAreaProvider>
-			</AuthProvider>
-		</LocationProvider>
+		<TrackProvider>
+			<LocationProvider>
+				<AuthProvider>
+					<SafeAreaProvider>
+						<NavigationContainer ref={navigationRef}>
+							<Stack.Navigator
+								screenOptions={{ headerShown: false }}
+								initialRouteName="ResolveAuth"
+							>
+								<Stack.Screen name="ResolveAuth" component={ResolveAuthScreen} />
+								<Stack.Screen name="loginFlow" component={LoginFlow} />
+								<Stack.Screen name="mainFlow" component={MainFlow} />
+							</Stack.Navigator>
+						</NavigationContainer>
+					</SafeAreaProvider>
+				</AuthProvider>
+			</LocationProvider>
+		</TrackProvider>
 	);
 }
 
