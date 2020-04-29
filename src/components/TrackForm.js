@@ -16,7 +16,7 @@ const TrackForm = () => {
 				<Input value={name} onChange={changeName} placeholder="Enter Name" />
 			</Spacer>
 			{recording ? (
-				<Button onPress={stopRecording} title="Stop Recording" />
+				<Button onPress={stopRecording} title="Stop" />
 			) : (
 				<Button onPress={startRecording} title="Start Recording" />
 			)}
