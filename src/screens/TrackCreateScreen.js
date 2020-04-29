@@ -12,7 +12,7 @@ const TrackCreateScreen = () => {
 	const callback = useCallback((location) => addLocation(state.recording, location), [
 		state.recording,
 	]);
-	const [mapError] = useLocation(useIsFocused(), callback);
+	const [mapError] = useLocation(useIsFocused() || state.recording, callback);
 
 	return (
 		<SafeAreaView>
