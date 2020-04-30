@@ -20,7 +20,7 @@ const locationReducer = (state, action) => {
 
 // Actions
 const changeName = (dispatch) => (name) => {
-	dispatch({ type: "change_name", payload: name });
+	dispatch({ type: "change_name", payload: name.nativeEvent.text });
 };
 const startRecording = (dispatch) => () => {
 	dispatch({ type: "start_recording" });
