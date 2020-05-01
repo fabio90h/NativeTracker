@@ -12,6 +12,8 @@ import TrackDetailScreen from "./src/screens/TrackDetailScreen";
 import TrackListScreen from "./src/screens/TrackListScreen";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 
+import { FontAwesome } from "@expo/vector-icons";
+
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 // PROVIDERS
@@ -71,9 +73,27 @@ function MainFlow() {
 	const Tab = createBottomTabNavigator();
 	return (
 		<Tab.Navigator>
-			<Tab.Screen name="Account" component={AccountScreen} />
-			<Tab.Screen name="TrackCreate" component={TrackCreateScreen} />
-			<Tab.Screen name="trackListFlow" component={TrackListFlow} />
+			<Tab.Screen
+				name="Account"
+				component={AccountScreen}
+				options={{ tabBarIcon: () => <FontAwesome name="gear" size={20} /> }}
+			/>
+			<Tab.Screen
+				name="TrackCreate"
+				options={{
+					tabBarLabel: "Add Track",
+					tabBarIcon: () => <FontAwesome name="plus" size={20} />,
+				}}
+				component={TrackCreateScreen}
+			/>
+			<Tab.Screen
+				name="trackListFlow"
+				options={{
+					tabBarLabel: "Track List",
+					tabBarIcon: () => <FontAwesome name="th-list" size={20} />,
+				}}
+				component={TrackListFlow}
+			/>
 		</Tab.Navigator>
 	);
 }
